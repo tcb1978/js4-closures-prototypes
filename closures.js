@@ -14,9 +14,9 @@ function outer() {
   closure over the name variable. Invoke outer saving the return value into
   another variable called 'inner'. */
   
-  // Code Here
+  var inner = outer()
   
-  //Once you do that, invoke inner.
+  inner()
   
   //Code Here
   
@@ -50,8 +50,8 @@ function outer() {
   (HINT: You will need to pass in arguments to both function invocations)
   */
   
-    //Code Here
-  
+  var callJake = callFriend('Jake')
+  callJake(435-555-9248)
   
   
   
@@ -68,14 +68,20 @@ function outer() {
   /* Write a function called makeCounter that makes the following code work
   properly. */
   
-  //Code Here
+  function makeCounter(num) {
+    var num = 0
+    return function () {
+      num++
+      return num
+    }
+  }
   
   //Uncomment this once you make your function
-  //   var count = makeCounter();
-  //   count(); // 1
-  //   count(); // 2
-  //   count(); // 3
-  //   count(); // 4
+    var count = makeCounter();
+    count(); // 1
+    count(); // 2
+    count(); // 3
+    count(); // 4
   
   
   
@@ -101,12 +107,13 @@ function outer() {
   */
   
   function counterFactory(value) {
-  
-    // Code here.
-  
-  
     return {
-
+      inc() {
+        return value += 1
+      },
+      dec() {
+        return value -= 1
+      }
     }
   }
   
@@ -141,11 +148,13 @@ function outer() {
   
     var welcomeText = 'You\'re doing awesome, keep it up ';
   
-    // code message function here.
+    function message() {
+      return welcomeText + firstname + ' ' + lastname + '.'
+    }
   
   
     //Uncommment this to return the value of your message function
-    //return message;
+    return message;
   
   }
   
@@ -183,7 +192,10 @@ function outer() {
     // Anything that is being returned is made public and can be invoked from
     // outside our lexical scope
     return {
-      // Code here.
+      publicMethod(){
+        var result = privateMethod()
+        return result
+      }
     };
   
   })();
@@ -202,7 +214,14 @@ function outer() {
     var secret = 143;
 
     return {
-      // Code here
+      addToSecret(param){
+        secret = secret + param
+        return secret
+      },
+      takeAwayFromSecret(param) {
+        secret = secret - param
+        return secret
+      }
     }
   }
   
@@ -230,9 +249,11 @@ function outer() {
   
   function timeOutCounter() {
     for (var i = 0; i <= 5; i++) {
-      setTimeout(function() {
-          console.log(i)
-      }, i * 1000)
+      setTimeout(function (x) {
+        return function () {
+          console.log(x);
+        };
+      }(i), 1000 * i);
     }
   }
   timeOutCounter();
